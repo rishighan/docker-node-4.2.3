@@ -23,7 +23,8 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
   && rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc
 
-CMD [ "node" ]
 
-VOLUME 
-EXPOSE
+VOLUME /home/:./
+EXPOSE 80:8080
+
+CMD [ "node" ]
