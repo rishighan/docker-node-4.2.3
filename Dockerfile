@@ -15,6 +15,7 @@ RUN set -ex \
 
 ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 4.2.3
+ENV START app.js
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
@@ -27,4 +28,4 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 VOLUME /app/
 EXPOSE 80
 
-CMD [ "node" ]
+CMD [ "node $START" ]
