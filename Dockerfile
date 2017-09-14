@@ -15,7 +15,16 @@ RUN set -ex \
 
 ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 4.2.0
-RUN apt-get update && apt-get install -qq -y build-essential curl tar g++ make
+RUN apt-get update && \
+    apt-get install -qq -y build-essential curl tar git g++ python make wget \
+    chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev \
+    libfontconfig1 libfontconfig1-dev && \
+    export PHANTOM_JS="phantomjs-2.1.1-linux-x86_64" && \
+    wget https://github.com/Medium/phantomjs/releases/download/v2.1.1/$PHANTOM_JS.tar.bz2 && \
+    tar xvjf $PHANTOM_JS.tar.bz2 && \
+    mv $PHANTOM_JS /usr/local/share && \
+    ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/bin && \
+    phantomjs --version 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
   && gpg --verify SHASUMS256.txt.asc \
