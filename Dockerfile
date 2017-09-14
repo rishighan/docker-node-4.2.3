@@ -1,4 +1,4 @@
-FROM buildpack-deps:jessie
+FROM ubuntu:16.04 
 
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
@@ -14,9 +14,8 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 4.2.3
-ENV START app.js
-
+ENV NODE_VERSION 4.2.0
+RUN apt-get update && apt-get install -qq -y build-essential curl tar g++ make
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
   && gpg --verify SHASUMS256.txt.asc \
@@ -24,8 +23,5 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
   && rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc
 
+CMD node -v
 
-VOLUME /app/
-EXPOSE 80
-
-CMD [ "node $START" ]
