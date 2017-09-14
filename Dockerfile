@@ -1,5 +1,5 @@
 FROM ubuntu:16.04 
-
+# installs node 4.2.0 and phantomjs 2.1.1
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
   && for key in \
